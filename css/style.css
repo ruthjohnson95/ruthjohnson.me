@@ -9,6 +9,50 @@ p, h1, h2, h3, h4, h5{
   font-size: 14px;
 }
 
+.affix {
+    top: 0;
+    width: 100%;
+}
+
+.affix + .container-fluid {
+    padding-top: 50px;
+}
+
+.navbar-static-top{
+  background-color: #222;
+  height: 4%;
+}
+.navbar-inverse {
+  background-color: #222;
+  height: 4%;
+}
+.navbar-inverse .navbar-nav>li>a {
+  font-size: 100%;
+  margin:0;
+}
+.navbar-inverse .navbar-brand {
+    font-size: 125%;
+}
+
+.nav>li>a{
+  padding: 2 20 20 2;
+}
+
+.bottom{
+  display: block;
+  background-color: #0bc;
+  height: 30%;
+  padding-top: 30px;
+}
+
+.up{
+  display: block;
+  text-align: right;
+  width: 95%;
+  font-size: 175%;
+  color: #ff0096;
+}
+
 h1{
   font-weight: 600;
   font-size: 50px;
@@ -18,18 +62,6 @@ hr{
   border-color: #0bc;
 }
 
-.navbar-inverse {
-    border-color: #222;
-    padding-bottom: 50px;
-}
-.navbar-inverse .navbar-nav>li>a {
-  color: #ff0096;
-  font-size: 100%;
-}
-.navbar-inverse .navbar-brand {
-    color: #ff0096;
-    font-size: 125%;
-}
 
 .main{
   background-color: #222; /* E0E8F0*/
@@ -38,11 +70,14 @@ hr{
   height: 100%
 }
 
+
 .contact{
   background-color: white;
   width: 70%;
   margin: 0 auto;
-  line-height: 250%
+  line-height: 250%;
+  padding-bottom: 50px;
+  padding-top: 50px;
 }
 
 .projects{
@@ -56,7 +91,8 @@ hr{
   background-color: white;
   width: 70%;
   margin: 0 auto;
-  line-height: 175%
+  line-height: 175%;
+  padding-top: 50px;
 }
 
 .news{
@@ -65,7 +101,15 @@ hr{
   margin: 0 auto;
   line-height: 175%;
   padding-bottom: 10px;
-  padding-top: 50px;
+  padding-top: 70px;
+}
+
+.blog{
+  background-color: white;
+  width: 70%;
+  margin: 0 auto;
+  line-height: 175%;
+  padding-bottom: 10px;
 }
 
 .research{
@@ -73,6 +117,7 @@ hr{
   width: 70%;
   margin: 0 auto;
   line-height: 175%;
+  padding-top: 20px;
 }
 
 h2.news{
@@ -241,11 +286,12 @@ li{
 }
 
 #demo{
-  width: 70%;
+  width: 100%;
 }
 
-#resume{
-  padding-bottom: 20px;
+.resume{
+  padding-top: 20px;
+  padding-bottom: 10px;
 }
 /* Start CSS */
 
