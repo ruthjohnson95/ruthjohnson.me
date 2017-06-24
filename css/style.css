@@ -18,11 +18,16 @@ p, h1, h2, h3, h4, h5{
     padding-top: 50px;
 }
 
+img#ruthie{
+  width: 35%;
+  float: right;
+  padding-left: 25px;
+}
 .navbar{
   border: none;
 }
 
-.navbar-static-top{
+.navbar-fixed-bottom{
   background-color: #222;
   height: 4%;
 }
@@ -34,6 +39,7 @@ p, h1, h2, h3, h4, h5{
 .navbar-inverse .navbar-nav>li>a {
   font-size: 100%;
   margin:0;
+  padding-bottom: 2px;
 }
 .navbar-inverse .navbar-brand {
     font-size: 125%;
@@ -351,6 +357,15 @@ li{
     p{
       font-size: 27px;
       line-height: 200%;
+    }
+
+    img#ruthie{
+      float: none;
+      width: 70%;
+      display: block;
+      margin: 0 auto;
+      padding-top: 15px;
+      padding-bottom: 25px;
     }
 
     #terminal{
