@@ -421,6 +421,11 @@
   </footer>
 
 <script type="text/javascript">
+  if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+// some code..
+  }else
+  {
+
 
   var $lines = $('.prompt p');
   $lines.hide();
@@ -466,6 +471,8 @@
   }
 
   terminal();
+
+}
 </script>
 
 </nav>
