@@ -132,6 +132,8 @@ h2.news{
   body {
   background-color: white;
   font-family: Menlo, Monaco, "Consolas", "Courier New", "Courier";
+  -webkit-backface-visibility: hidden;
+
 }
 body p{
   /*font-weight: 200;*/
