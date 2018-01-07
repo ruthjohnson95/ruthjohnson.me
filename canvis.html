@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Visualizing fine-mapping studies with CANVIS</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!-- Custom fonts for this template -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+    <!-- Custom styles for this template -->
+    <!--<link href="css/post-style.css" rel="stylesheet"> -->
+    <link href="css/clean-blog-post.css" rel="stylesheet">
+
+
+  </head>
+
+  <body>
+
+    <div class="navbar hidden-tablet hidden-phone" style="min-height:50px;" >
+      <nav class="navbar navbar-default navbar-fixed-bottom">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html#blog"><span style="color: #ff0096;" class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
+      </ul>
+      </nav>
+    </div>
+
+    <!-- Post Content -->
+    <article>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+
+
+            <h1 class="title">Visualizing fine-mapping studies with CANVIS</h1>
+
+            <hr>
+
+            <p class="post">
+              One of the first projects I worked on was a fine-mapping visualization tool called CANVIS
+              (Correlation ANnotation Visualization). The motivation behind CANVIS was to address the current patchwork-like method of visualizing a fine-mapping locus.
+            </p>
+
+            <p class="post">
+                 Recent fine-mapping methods such as PAINTOR <a href="http://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1004722">(Kichaev et al. 2014)</a> make use of summary
+                 statistics, LD, and functional annotations to compute posterior probabilities of a SNP to be causal.
+                  Although there is current software to visualize a locus, the underlying LD
+                  structure, and the resulting posterior probabilities, it still remains a hassle to string all of
+                   these individual images together to create one figure.
+            </p>
+
+            <p class="post">
+              <b>CANVIS is a command line tool that generates publication-ready figures within ~30-60 seconds and is
+              great for providing a visual summary of an integrative fine-mapping experiment.</b>
+            </p>
+
+            <p class="post">
+              So far, I’ve found myself to be my #1 customer of
+              the tool—I figured writing a bit about it would be a great way to encourage others
+              to use the tool as well as get some user feedback.
+            </p>
+
+            <h2>About CANVIS</h2>
+
+            <p class="post">
+              CANVIS is written all in Python, and runs on the command line. It takes the following files listed below. The output
+              is an SVG file with plots of the input data. The most basic image is just plotting the p-values given from GWAS,
+              producing only the GWAS locus plot. (This can be great for quickly visualizing a region without taking it off the cluster.)
+              Users can easily add LD, annotations, multiple annotations, even multiple LD matrices! For example, if a study has multiple
+              traits, then you can plot two GWAS locus plots. And one major advantage of plotting multiple
+              LD matrices is being able to visualize studies that leverage information from multiple populations.
+            </p>
+
+            <p><b>Input:</b></p>
+
+            <ul>
+              <li>Posterior probabilities of each SNP to be causal (computed from some fine-mapping framework) </li>
+              <li>Tracks of functional annotations </li>
+              <li>P-values/z-scores for a region from GWAS</li>
+              <li>LD matrix for a region</li>
+            </ul>
+
+            <p><b>Output:</b></p>
+
+
+            <a href="#">
+              <img class="img-fluid" src="img/blog/canvis_blog.png" alt="">
+            </a>
+
+            <p class="post">
+              A few details to highlight are in the plot of the GWAS loci. The SNP with the highest computed posterior probability is denoted with a black marker. Then the pairwise correlation with this SNP and the others in the region is shaded accordingly. Additionally, in the posterior probability plot, the SNPs that fall into the credible set (the top markers which account for a certain probability of capturing all causal variants) are labeled in red; CANVIS calculates the credible set for a given locus and cutoff percentage.
+            </p>
+
+            <br>
+
+            <a href="#">
+              <img class="img-fluid" src="img/blog/canvis_ld.png" alt="">
+            </a>
+            <p><span class="caption text-muted" style="font-family: Menlo, Monaco, Consolas, Courier New, Courier; font-size: 75%">
+              Here is an image generated with CANVIS used in a review article by <a href="https://www.nature.com/articles/nrg.2016.142">Pasaniuc & Price</a>. The figure shows
+              a sample locus with simulated fine-mapping data from European and African populations.
+            </span></p>
+
+            <h2>How it works</h2>
+
+            <p class="post">
+               Matplotlib is amazing, but on its own there are a few hurdles. The posterior probability and GWAS plot are the standard scatterplots
+               from matplotlib. The annotation bars are actually color bars also created from matplotlib. Then the correlation matrix
+               is created using the <a href="https://seaborn.pydata.org/">seaborn</a> library (I’ve yet to find a better Python library that can produce more beautiful
+               correlation matrices).
+             </p>
+
+             <p class="post">
+               The major issue was that using the ‘plt.subplot’
+               function wasn’t enough to combine all of the different types of plots we wanted.
+               To address the challenge, we had to get pretty creative.
+               Each individual plot is saved as an SVG file, then using the <a href="https://pypi.python.org/pypi/svgutils">svgutils</a> library, CANVIS manually rearranges all
+               of the plots into one larger SVG file. The additional benefit of returning an SVG file is that since it's a vector file,
+              the image has very high resolution and can easily be converted to a variety of other file types.
+            </p>
+
+
+            <h2>Availability</h2>
+
+            <p class="post">
+               CANVIS is packaged with the latest release of PAINTOR. (get it? PAINTOR and CANVIS…I’m still very impressed with the pairing of these acronyms) It can be downloaded off of <a href="https://github.com/gkichaev/PAINTOR_V3.0">Github</a> with an accompanying <a href="https://github.com/gkichaev/PAINTOR_V3.0/wiki/5.-Visualization-with-PAINTOR-CANVIS">wiki</a>. Additionally, there’s sample data and a script to quickly produce an example figure!
+            </p>
+
+            <script src="https://gist.github.com/ruthjohnson95/a78ba73e058889b8789ac08ee908b780.js"></script>
+
+            <p class="post">
+                Hopefully this tool will be useful; I know I’ve found it very convenient during my own write-ups.
+                If anyone has any suggestions on how to make the tool easier or additional features,
+                feel free to email me. And if you encounter a bug, make sure to flag it as an Issue on Github, and I’ll get to it as soon as possible.
+            </p>
+
+
+            <hr>
+
+            <p> Questions, Comments, Concerns? Feel free to reach out at ruthjohnson at ucla dot edu </p>
+          </div>
+
+
+          </div>
+        </div>
+      </div>
+  </article>
+
+    <!-- Footer -->
+    <!-- <footer class="bottom">
+    <h4 style="color: #222;">Thanks for stopping by!</h4>
+    <span style="color: #ff0096;" class="glyphicon glyphicon-heart" aria-hidden="true"></span>
+    <br>
+    <p style="color: #222;"> blog template modified from <a href="https://startbootstrap.com/template-overviews/clean-blog/">Clean Blog</a> </p>
+  </footer> -->
+
+  <footer>
+
+  </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="js/clean-blog.min.js"></script>
+
+  </body>
+
+</html>

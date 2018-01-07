@@ -1,0 +1,44 @@
+
+.container{
+	padding-top: 20px;
+	padding-bottom: 50px;
+}
+
+hr { background-color: #ff0096; height: 1px; border: 0; }
+
+.bottom{
+  font-family: Menlo, Monaco, "Consolas", "Courier New", "Courier";
+  display: block;
+  background-color: #0bc;
+  height: 30%;
+  padding-top: 30px;
+}
+
+h1.title{
+	color: #222;
+	font-family: 'Signika', sans-serif;
+	font-weight: bold;
+}
+
+h2{
+	font-size: 20px;
+	line-height: 130%;
+}
+
+ footer{
+    height: 175px;
+    background-color: white;
+    color: #E9D460;
+    text-align: center;
+  }
+  #thank_you{
+    padding-top: 50px;
+  }
+  .icons{
+    margin:  0 auto;
+    padding-top: 30px;
+  }
+  .icons img{
+    padding-right:15px;
+    padding-left: 15px;
+  }
